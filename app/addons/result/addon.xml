@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>result</id>
+    <version>1.0</version>
+    <priority>999999999999</priority>
+    <position>0</position>
+    <status>active</status>
+    <dependencies/>
+    <default_language>ru</default_language>
+    <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
+    <queries>
+        <item for="install">ALTER TABLE `?:users` ADD COLUMN `result_calc`  CHAR(1) NOT NULL DEFAULT 'N'</item>
+        <item for="install">ALTER TABLE `?:users` ADD COLUMN `result_head`  CHAR(1) NOT NULL DEFAULT 'N'</item>
+        <item for="install">ALTER TABLE `?:users` ADD COLUMN `result_remote`  CHAR(1) NOT NULL DEFAULT 'N'</item>
+        <item for="install">ALTER TABLE `?:users` ADD COLUMN `result_salary` INT UNSIGNED NOT NULL DEFAULT '0'</item>
+        <item for="install">ALTER TABLE `?:users` ADD COLUMN `result_employment_date` INT UNSIGNED NOT NULL DEFAULT '0'</item>
+        <item>DROP TABLE IF EXISTS ?:rating_call_managers;</item>
+        <item>DROP TABLE IF EXISTS ?:rating_settings;</item>
+        <item>DROP TABLE IF EXISTS ?:results;</item>
+        <item>
+            CREATE TABLE `?:result_settings` (
+            `name_options` VARCHAR(32) NOT NULL,
+            `parameter` TEXT NOT NULL
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:rating_call_managers` (
+            `manager_id` int(10) NOT NULL default '0',
+            `options` text NOT NULL,
+            `time_from` int(10) NOT NULL default '0',
+            `time_to` int(10) NOT NULL default '0'
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:rating_settings` (
+            `greeting_weight` int(10) NOT NULL default '0',
+            `courtesy_weight` int(10) NOT NULL default '0',
+            `help_client_weight` int(10) NOT NULL default '0',
+            `work_objections_weight` int(10) NOT NULL default '0',
+            `thanks_weight` int(10) NOT NULL default '0',
+            `stock_notice_weight` int(10) NOT NULL default '0',
+            `promise_callback_weight` int(10) NOT NULL default '0',
+            `product_knowledge_weight` int(10) NOT NULL default '0',
+            `discipline_weight` int(10) NOT NULL default '0'
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:results` (
+            `manager_id` int(10) NOT NULL default '0',
+            `options` text NOT NULL,
+            `time_from` int(10) NOT NULL default '0',
+            `time_to` int(10) NOT NULL default '0'
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item type="file" table="result_settings">database/data_settings.sql</item>
+        <item type="file" table="rating_settings">database/rating_settings.sql</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:result_settings;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:rating_call_managers;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:rating_settings;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:results;</item>
+    </queries>
+</addon>
